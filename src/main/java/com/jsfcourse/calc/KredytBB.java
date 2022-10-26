@@ -6,6 +6,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 
 @Named
 @RequestScoped
@@ -63,5 +65,57 @@ public class KredytBB {
 
 	public Double getResult() {
 		return result;
+	}
+	
+	public void validateAmount(FacesContext ctx, UIComponent comp, Object value) {
+		try {
+			double amount = Double.parseDouble((String) value);			
+
+			if(amount < 1000) {
+				((UIInput) comp).setValid(false);
+				ctx.addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wartość kredytu musi wynosić co najmniej 1000!", null));
+			}
+		} catch(Exception e) {
+			ctx.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas walidacji pola 'amount'. Error:" + e, null));
+		}
+		
+	}
+	
+	public void validateMonths(FacesContext ctx, UIComponent comp, Object value) {
+		try {
+			double months = Double.parseDouble((String) value);			
+
+			if(months < 2) {
+				((UIInput) comp).setValid(false);
+				ctx.addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wartość miesięcy musi wynieść co najmniej 2!", null));
+			}
+		} catch(Exception e) {
+			ctx.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas walidacji pola 'months'. Error:" + e, null));
+		}
+		
+	}
+	
+	public void validateRate(FacesContext ctx, UIComponent comp, Object value) {
+		try {
+			double rate = Double.parseDouble((String) value);			
+
+			if(rate < 0) {
+				((UIInput) comp).setValid(false);
+				ctx.addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wartość oprocentowania musi być liczbą dodatnią!", null));
+			}
+			
+			if(rate > 100) {
+				((UIInput) comp).setValid(false);
+				ctx.addMessage(null,  new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wartość oprocentowania musi być poniżej 100!", null));
+			}
+			
+			
+		} catch(Exception e) {
+			ctx.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd podczas walidacji pola 'rate'. Error:" + e, null));
+		}
+		
 	}
 }

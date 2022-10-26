@@ -16,15 +16,18 @@
 		<h:form id="bla">
 			<h:panelGrid id="grid" columns="3" cellpadding="5">
 		  		<p:outputLabel for="amount" value="Wartość kredytu:" />
-		  		<p:inputText id="amount" value="#{kredytBB.amount}" required="true" requiredMessage="Brak wartości kredytu" />
+		  		<p:inputText id="amount" value="#{kredytBB.amount}" required="true" 
+		  		  requiredMessage="Brak wartości kredytu" validator="#{kredytBB.validateAmount}" />
 		  		<p:message for="amount" />
 				
 		  		<p:outputLabel for="months" value="Liczba miesięcy:" />
-		  		<p:inputText id="months" value="#{kredytBB.months}" required="true" requiredMessage="Brak liczby miesięcy" />
+		  		<p:inputText id="months" value="#{kredytBB.months}" required="true" 
+		  		  requiredMessage="Brak liczby miesięcy"  validator="#{kredytBB.validateMonths}"  />
 		  		<p:message for="months" />
 				
 				<p:outputLabel for="rate" value="Oprocentowanie (w %):" />
-				<p:inputText id="rate" value="#{kredytBB.rate}" required="true" requiredMessage="Brak oprocentowania" />
+				<p:inputText id="rate" value="#{kredytBB.rate}" required="true" 
+				   requiredMessage="Brak oprocentowania"  validator="#{kredytBB.validateRate}"  />
 				<p:message for="rate" />
 		
 				<p:commandButton value="Oblicz" action="#{kredytBB.calc()}" update="@form" />
