@@ -6,36 +6,41 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 >
-<h:head>
-	<title>Kalkulator kredytowy</title>
-</h:head>
-<h:body>
 
-	<p:panel header="Kalkulator kredytowy">
+<ui:composition template="/templates/main-template.xhtml">
+	<ui:define name="header">
+		<p:panel toggleable="true" styleClass="bottom-space">
+			<h1>
+				<ui:insert name="title">Kalkulator kredytowy</ui:insert>
+			</h1>
+		</p:panel>
+	</ui:define>
 	
-		<h:form id="bla">
-			<h:panelGrid id="grid" columns="3" cellpadding="5">
-		  		<p:outputLabel for="amount" value="Wartość kredytu:" />
-		  		<p:inputText id="amount" value="#{kredytBB.amount}" required="true" 
-		  		  requiredMessage="Brak wartości kredytu" validator="#{kredytBB.validateAmount}" />
-		  		<p:message for="amount" />
+	<ui:define name="content">
+		<p:panel toggleable="true">
+			<h:form id="bla">
+				<h:panelGrid id="grid" columns="3" cellpadding="5">
+			  		<p:outputLabel for="amount" value="Wartość kredytu:" />
+			  		<p:inputText id="amount" value="#{kredytBB.amount}" required="true" 
+			  		  requiredMessage="Brak wartości kredytu" validator="#{kredytBB.validateAmount}" />
+				  	<p:message for="amount" />
+						
+				  	<p:outputLabel for="months" value="Liczba miesięcy:" />
+				  	<p:inputText id="months" value="#{kredytBB.months}" required="true" 
+				  	  requiredMessage="Brak liczby miesięcy"  validator="#{kredytBB.validateMonths}"  />
+				  	<p:message for="months" />
+						
+					<p:outputLabel for="rate" value="Oprocentowanie (w %):" />
+					<p:inputText id="rate" value="#{kredytBB.rate}" required="true" 
+					   requiredMessage="Brak oprocentowania"  validator="#{kredytBB.validateRate}"  />
+					<p:message for="rate" />
 				
-		  		<p:outputLabel for="months" value="Liczba miesięcy:" />
-		  		<p:inputText id="months" value="#{kredytBB.months}" required="true" 
-		  		  requiredMessage="Brak liczby miesięcy"  validator="#{kredytBB.validateMonths}"  />
-		  		<p:message for="months" />
+					<p:commandButton value="Oblicz" action="#{kredytBB.calc()}" update="@form" />
+				</h:panelGrid>
 				
-				<p:outputLabel for="rate" value="Oprocentowanie (w %):" />
-				<p:inputText id="rate" value="#{kredytBB.rate}" required="true" 
-				   requiredMessage="Brak oprocentowania"  validator="#{kredytBB.validateRate}"  />
-				<p:message for="rate" />
-		
-				<p:commandButton value="Oblicz" action="#{kredytBB.calc()}" update="@form" />
-			</h:panelGrid>
-		
-			<p:messages id="msg" />
-		</h:form>
-	</p:panel>
-
-</h:body>
+				<p:messages id="msg" />
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
 </html>
